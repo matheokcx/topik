@@ -8,10 +8,50 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String?
-  email     String?  @unique
-  password  String?
-  image     String?
-  createdAt DateTime @default(now())
+  id          Int           @id @default(autoincrement())
+  nom         String?
+  email       String?       @unique
+  password    String?
+  image       String?
+  age         Int?
+  createdAt   DateTime      @default(now())
+  Article     Article[]
+  Like        Like[]
+  Commentaire Commentaire[]
+}
+
+model Categorie {
+  id      Int       @id @default(autoincrement())
+  nom     String
+  Article Article[]
+}
+
+model Article {
+  id          Int           @id @default(autoincrement())
+  titre       String
+  texte       String
+  visuel      String?
+  categorie   Categorie     @relation(fields: [idCategorie], references: [id])
+  idCategorie Int
+  auteur      User          @relation(fields: [idAuteur], references: [id])
+  idAuteur    Int
+  Like        Like[]
+  Commentaire Commentaire[]
+}
+
+model Like {
+  id        Int     @id @default(autoincrement())
+  article   Article @relation(fields: [idArticle], references: [id])
+  idArticle Int
+  auteur    User    @relation(fields: [idAuteur], references: [id])
+  idAuteur  Int
+}
+
+model Commentaire {
+  id        Int     @id @default(autoincrement())
+  article   Article @relation(fields: [idArticle], references: [id])
+  idArticle Int
+  auteur    User    @relation(fields: [idAuteur], references: [id])
+  idAuteur  Int
+  texte     String
 }

@@ -16,5 +16,5 @@ export default withAuth(
 );
 
 export const config = {
-    matcher: ["/dashboard/:path*"], // Routes protégées
+    matcher: ["/dashboard/:path*", "/articles"], // Routes protégées
 };
